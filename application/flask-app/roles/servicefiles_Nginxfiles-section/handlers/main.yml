@@ -1,0 +1,9 @@
+---
+- name: restart_nginx 
+  service: name=nginx state=restarted enabled=yes
+
+- name: site_link
+  shell: ln -s /etc/nginx/sites-available/app /etc/nginx/sites-enabled/
+
+- name: restart_proxy
+  service: name=app.service state=started enabled=yes

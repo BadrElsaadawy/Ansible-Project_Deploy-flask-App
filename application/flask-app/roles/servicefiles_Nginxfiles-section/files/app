@@ -1,0 +1,10 @@
+server {
+    listen 80;
+    server_name 18.118.150.60;
+
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix:/home/ubuntu/simple-webapp/app.sock;
+    }
+}
+

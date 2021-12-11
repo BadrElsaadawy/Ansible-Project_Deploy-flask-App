@@ -1,0 +1,7 @@
+---
+- name: copy sql file to db-server
+  copy: src=employee_db.sql dest=/root/
+- name: restore db from sql file
+  shell: mysql -u root employee_db < /root/employee_db.sql
+
+

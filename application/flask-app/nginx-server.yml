@@ -1,0 +1,5 @@
+---
+- hosts: nginx-server
+  roles:
+     - app_code-section  
+     - servicefiles_Nginxfiles-section

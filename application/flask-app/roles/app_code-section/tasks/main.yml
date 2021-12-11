@@ -1,0 +1,16 @@
+---
+
+- name: make hosting directory 
+  file: name=simple-webapp path=/home/ubuntu/simple-webapp state=directory 
+
+- name: copy code files to hosting directory 
+  copy: src={{ item }} dest=/home/ubuntu/simple-webapp/
+  loop:
+    - app.ini
+    - app.py  
+    - wsgi.py   
+  notify: 
+   - fix_owns
+  changed_when: true
+- meta: flush_handlers 
+

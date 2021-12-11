@@ -1,0 +1,31 @@
+---
+#update the system 
+ - name: update the system
+   apt: update_cache=yes
+# install our packages   
+ - name: install mariadb packages 
+   apt:
+    name:
+      - mariadb-server
+      - mariadb-client
+    state: present
+# allow mariadb ports 
+ - name: Allow mariadb ports
+   ufw:
+    rule: allow
+    port: '3306'
+    proto: tcp
+
+- name: Allow ssh port
+   ufw:
+    rule: allow
+    port: '22'
+    proto: tcp    
+   changed_when: true
+# stop mariadb because galera cluster requires all nodes must be down 
+# And reload our firewall to update it's rules 
+   notify: 
+    - reload_firewall
+    - activate_firewall
+    - stop_mariadb
+ - meta: flush_handlers

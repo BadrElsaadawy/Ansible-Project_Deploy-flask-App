@@ -1,0 +1,6 @@
+---
+- name: reload_firewall
+  ufw: state=reloaded
+
+- name: activate_firewall 
+  ufw: state=enabled

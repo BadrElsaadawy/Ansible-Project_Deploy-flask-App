@@ -1,0 +1,12 @@
+---
+- name: install python3 pip
+  apt: name=python3-pip state=present update_cache=true
+ 
+
+- name: install flask 
+  pip: 
+   name:
+     - flask
+     - flask-mysql
+     - uwsgi
+   state: present

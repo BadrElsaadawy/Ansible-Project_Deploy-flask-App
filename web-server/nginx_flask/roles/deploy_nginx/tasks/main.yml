@@ -1,0 +1,31 @@
+---
+- name: install nginx 
+  apt: name=nginx state=present 
+
+- name: install python3-mysqldb
+  apt: name=python3-mysqldb state=present 
+
+- name: start and enable nginx 
+  service: name=nginx state=started enabled=yes
+  changed_when: true
+- meta: flush_handlers 
+
+- name: Allow nginx port
+  ufw:
+   rule: allow
+   port: '80' 
+   proto: tcp
+
+- name: Allow ssh port
+  ufw:
+   rule: allow
+   port: '22'
+   proto: tcp
+  changed_when: true
+
+  notify:     
+   - reload_firewall
+   - activate_firewall
+
+- meta: flush_handlers 
+

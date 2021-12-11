@@ -1,0 +1,47 @@
+---
+
+- name: install galera package
+  apt:
+   name: 
+    - galera-3
+   state: present 
+
+- name: Allow galera tcp ports 
+  ufw: 
+   rule: allow
+   port: "{{ item }}"
+   proto: tcp
+  with_items:
+    - 4567
+    - 4568
+    - 4444
+    - 22
+
+- name: Allow galera udp ports
+  ufw:
+   rule: allow
+   port: 4567
+   proto: udp
+  changed_when: true  
+
+  notify: 
+   - reload_firewall 
+   - activate_firewall
+- meta: flush_handlers
+
+
+- name: galera configuration file
+  template: src=galera.cnf.j2 dest=/etc/mysql/conf.d/galera.cnf
+
+
+- name: Run cluster script 
+  command: galera_new_cluster
+  when: ansible_host == "172.31.42.223"
+
+- name: start mariadb 
+  service: name=mariadb state=started enabled=yes
+  when: ansible_host == "172.31.37.167"
+
+
+
+

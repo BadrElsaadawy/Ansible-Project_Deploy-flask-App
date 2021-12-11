@@ -1,0 +1,17 @@
+--- 
+
+- name: copy proxy unit-file to systemd 
+  copy: src=app.service dest=/etc/systemd/system/
+  changed_when: true
+  notify:
+     - restart_proxy 
+- meta: flush_handlers 
+
+
+- name: copy app file to sites available
+  copy: src=app dest=/etc/nginx/sites-available/
+  changed_when: true
+  notify:
+     - site_link
+     - restart_nginx 
+- meta: flush_handlers

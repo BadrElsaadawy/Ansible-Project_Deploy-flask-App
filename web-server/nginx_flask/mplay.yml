@@ -1,0 +1,6 @@
+---
+- hosts: nginx-server
+  roles:
+    - deploy_nginx 
+    - deploy_flask
+

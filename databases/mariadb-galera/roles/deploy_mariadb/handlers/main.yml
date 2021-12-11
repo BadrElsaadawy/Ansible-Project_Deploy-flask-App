@@ -1,0 +1,16 @@
+---
+- name: clean_cache
+  command: apt clean cache all
+
+- name: update_system
+  apt: update_cache=yes
+    
+- name: activate_firewall
+  ufw: state=enabled
+
+ 
+- name: reload_firewall
+  ufw: state=reloaded
+
+- name: stop_mariadb
+  service: name=mariadb state=stopped
